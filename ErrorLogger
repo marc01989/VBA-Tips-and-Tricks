@@ -33,7 +33,7 @@ End Sub
 
 On Error GoTo err1:
 
-    'CODE THAT COULD THROUGH ERROR GOES HERE
+    'CODE THAT MIGHT THROW ERROR GOES HERE
 
 err1:
     Select Case Err.Number
