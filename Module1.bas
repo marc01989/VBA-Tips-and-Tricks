@@ -2,28 +2,29 @@ Attribute VB_Name = "Module1"
 Option Compare Database
 
 Public Sub LogError(strError, modName As String)
-'logs captured errors to txt file
-'list of errors
-'https://msdn.microsoft.com/en-us/library/bb221208(v=office.12).aspx
+    'call this sub from other modules in VBA project to save the error to txt file
+    'list of errors: https://msdn.microsoft.com/en-us/library/bb221208(v=office.12).aspx
 
-    Dim strPath As String, comp As String
+    Dim strPath As String, userName As String
     Dim fs As Object
     Dim a As Object
 
-    comp = Environ$("username")
-    strPath = "X:\Quality Audit\Quality Audit(DeptUsers)\Technical Team\Focused_Rev\DBs\BE\HMS\db_utilities"
+    'GET USERNAME OF LOGGED ON USER
+    userName = Environ$("username")
+    'PATH TO SAVE TEXT FILE
+    strPath = "C:/Users/Public/Desktop"
 
     Set fs = CreateObject("Scripting.FileSystemObject")
-        If fs.FileExists(strPath & "\ErrorLogHMS.txt") = True Then
-            Set a = fs.Opentextfile(strPath & "\ErrorLogHMS.txt", 8)
+        If fs.FileExists(strPath & "\ErrorLog.txt") = True Then
+            Set a = fs.Opentextfile(strPath & "\ErrorLog.txt", 8)
         Else
-            Set a = fs.createtextfile(strPath & "\ErrorLogHMS.txt")
+            Set a = fs.createtextfile(strPath & "\ErrorLog.txt")
         End If
     
         a.writeline "--------------------------------------------------------------------------"
         a.writeline "DATE: " & Date + Time
         a.writeline "ERROR: " & strError
-        a.writeline "USER: " & comp
+        a.writeline "USER: " & userName
         a.writeline "MODULE: " & modName
         a.writeline "VERSION: 1.7"
         a.writeline "--------------------------------------------------------------------------"
