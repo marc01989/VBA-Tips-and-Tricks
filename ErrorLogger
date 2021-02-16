@@ -30,3 +30,17 @@ Public Sub LogError(strError, modName As String)
     Set fs = Nothing
 End Sub
 
+
+On Error GoTo err1:
+
+    'CODE THAT COULD THROUGH ERROR GOES HERE
+
+err1:
+    Select Case Err.Number
+        Case 0
+        Case Else
+            Call LogError(Err.Number & " " & Err.Description, "Login; btnSubmit_Click()")
+            If MsgBox("Error connecting to database. See admin for assistance.", vbCritical + vbOKOnly, "System Error") = vbOK Then: Exit Sub
+            Exit Sub
+    End Select
+
