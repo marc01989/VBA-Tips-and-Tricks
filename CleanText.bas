@@ -1,13 +1,12 @@
 Attribute VB_Name = "CleanText"
 Option Compare Database
 
+Function Clean(txtClean As String)
 
 '-----------------------------------------------------------------------------------------------------------------------------------------------------------
 'Function can be called from other modules of Access project
 'Accepts string as param and removes invisible chars (spaces, tabs, etc)
 '-----------------------------------------------------------------------------------------------------------------------------------------------------------
-
-Function Clean(txtClean As String)
 
       txtClean = Replace(txtClean, vbLf, "")
       txtClean = Replace(txtClean, vbTab, "")
