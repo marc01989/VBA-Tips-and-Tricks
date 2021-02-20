@@ -12,8 +12,8 @@ Option Compare Database
 Private Sub btnUserCheck_Click()
 
 '-----------------------------------------------------------------------------------------------------------------------------------------------------------
-'query schema info to show what users are accessing records in HICS_2.0_be database
-'users must not be accessing backend data in order for admin to perform weekly backup
+'query schema info to show which users are accessing records in Access db backend
+'module assumes you have a form with listbox to display results and table that houses user names/computer names
 '-----------------------------------------------------------------------------------------------------------------------------------------------------------
 
     Dim cn As New ADODB.Connection
@@ -23,48 +23,43 @@ Private Sub btnUserCheck_Click()
     Dim compStr As String
     
 On Error GoTo err1:
-    lstResults.Value = Null
     lstResults.RowSource = ""
     
+    'UPDATE strCon WITH PATH TO DATABASE BACKEND, ADD USERID/PSWD AS NEEDED
     Set cn = New ADODB.Connection
     strCon = "Provider=Microsoft.ACE.OLEDB.12.0;" & _
-        "Data Source=X:\Member Enrollment\Member Enrollment(Custom)\Marketplace\Database\HICS 2.0 BE\HICS_2.0_BE.accdb;" & _
+        "Data Source=C:\Users\Public\Desktop\Database1.accdb;" & _
         "User Id=admin;Password="
     cn.Open (strCon)
 
-    ' The user roster is exposed as a provider-specific schema rowset
-    ' in the Jet 4.0 OLE DB provider.  You have to use a GUID to
-    ' reference the schema, as provider-specific schemas are not
-    ' listed in ADO's type library for schema rowsets
-
+    'THE USER ROSTER IS EXPOSED AS A PROVIDER-SPECIFIC SCHEMA ROWSET IN THE JET 4.0 OLE DB PROVIDER.  YOU HAVE TO USE A GUID TO
+    'REFERENCE THE SCHEMA, AS PROVIDER-SPECIFIC SCHEMAS ARE NOT LISTED IN ADO'S TYPE LIBRARY FOR SCHEMA ROWSETS
     Set rs = cn.OpenSchema(adSchemaProviderSpecific, _
     , "{947bb102-5d43-11d1-bdbf-00c04fb92675}")
 
-    'Output the list of all users in the database.
-    'Debug.Print rs.Fields(0).Name, "", rs.Fields(1).Name, _
-    "", rs.Fields(2).Name, rs.Fields(3).Name
-    
+    'OUTPUT HEADERS TO LISTBOX
     lstResults.AddItem rs.Fields(0).Name & "," & rs.Fields(1).Name & "," & rs.Fields(2).Name & "," _
     & rs.Fields(3).Name & "," & "USER_NAME"
     
     
     While Not rs.EOF
-
-        compStr = DLookup("specialist_name", "tblEmployeeNames", "[Computer Name] = '" & Clean(rs.Fields(0).Value) & "'") & vbNullString
+        'GET EMPLOYEE NAME BASED ON RETURNED COMPUTER NAME 
+        compStr = DLookup("employee_name", "tblEmployeeNames", "[Computer Name] = '" & Clean(rs.Fields(0).Value) & "'") & vbNullString
+        
+        'OUTPUT RESULTS TO LISTBOX
         lstResults.AddItem Clean(rs.Fields(0).Value) & "," & Clean(rs.Fields(1).Value) & "," & rs.Fields(2).Value & "," & rs.Fields(3).Value & "," & compStr
-
         rs.MoveNext
     Wend
     
     rs.Close: Set rs = Nothing
     cn.Close: Set cn = Nothing
     
+     'OPTIONAL ERROR HANDLING
 err1:
     Select Case Err.Number
         Case 0
         Case Else
-            Call LogError(Err.Number & " " & Err.Description, "USER CHECK; btnUserCheck_Click()")
-            If MsgBox("Error connecting to database. See admin for assistance.", vbCritical + vbOKOnly, "System Error") = vbOK Then: Exit Sub
+            If MsgBox("Error performing operation. See admin for assistance.", vbCritical + vbOKOnly, "System Error") = vbOK Then: Exit Sub
             Exit Sub
     End Select
     
