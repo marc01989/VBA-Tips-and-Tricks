@@ -11,7 +11,6 @@ Option Compare Database
 
 Private Sub btnUserCheck_Click()
 
-
 '-----------------------------------------------------------------------------------------------------------------------------------------------------------
 'query schema info to show what users are accessing records in HICS_2.0_be database
 'users must not be accessing backend data in order for admin to perform weekly backup
@@ -70,28 +69,6 @@ err1:
     End Select
     
 End Sub
-Function Clean(txtClean As String)
-'clean results of above query
+              
+              
 
-On Error GoTo err1:
-        txtClean = Replace(txtClean, vbLf, "")
-        txtClean = Replace(txtClean, vbTab, "")
-        txtClean = Replace(txtClean, vbCr, "")
-        txtClean = Replace(txtClean, vbCrLf, "")
-        txtClean = Replace(txtClean, vbNewLine, "")
-        txtClean = Replace(txtClean, Chr(160), "")
-        txtClean = Replace(txtClean, Chr(146), "")
-        txtClean = Replace(txtClean, Chr(39), "")
-        txtClean = Trim(txtClean)
-        txtClean = Left(txtClean, Len(txtClean) - 1)
-        Clean = txtClean
-                
-err1:
-    Select Case Err.Number
-        Case 0
-        Case Else
-            Call LogError(Err.Number & " " & Err.Description, "USER CHECK; Clean()")
-            If MsgBox("Error connecting to database. See admin for assistance.", vbCritical + vbOKOnly, "System Error") = vbOK Then: Exit Function
-            Exit Function
-    End Select
-End Function
