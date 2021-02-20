@@ -13,7 +13,7 @@ Private Sub btnUserCheck_Click()
 
 '-----------------------------------------------------------------------------------------------------------------------------------------------------------
 'query schema info to show which users are accessing records in Access db backend
-'module assumes you have a form with listbox to display results and table that houses user names/computer names
+'module assumes you have a form with listbox to display results and table that houses user name/computer name mapping
 '-----------------------------------------------------------------------------------------------------------------------------------------------------------
 
     Dim cn As New ADODB.Connection
