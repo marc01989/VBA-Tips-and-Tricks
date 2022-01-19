@@ -2,10 +2,13 @@ Attribute VB_Name = "ErrorLogger"
 Option Compare Database
 
 Public Sub LogError(strError, modName As String)
+    
+    '--------------------------------------------------------------------------------------------
     'call this sub from other modules in VBA project to save the error to txt file
     'this sub accepts the captured error and the name of module where error was thrown
     'list of Ms Access errors: https://msdn.microsoft.com/en-us/library/bb221208(v=office.12).aspx
-
+    '--------------------------------------------------------------------------------------------
+    
     Dim strPath As String, userName As String
     Dim fs As Object
     Dim a As Object
