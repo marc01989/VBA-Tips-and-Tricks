@@ -1,19 +1,13 @@
-VERSION 1.0 CLASS
-BEGIN
-  MultiUse = -1  'True
-END
 Attribute VB_Name = "Form_USER CHECK"
-Attribute VB_GlobalNameSpace = False
-Attribute VB_Creatable = True
-Attribute VB_PredeclaredId = True
-Attribute VB_Exposed = False
 Option Compare Database
 
 Private Sub btnUserCheck_Click()
 
 '-----------------------------------------------------------------------------------------------------------------------------------------------------------
 'query schema info to show which users are accessing records in Access db backend
-'module assumes you have a form with listbox to display results and table that houses user name/computer name mapping
+'module assumes you have a form with listbox to display results and table that houses user name/computer name mapping (tblEmployeeNames)
+'reference needed for ADO connection
+    '-Microsoft Activex Data Objects 6.0 Library
 '-----------------------------------------------------------------------------------------------------------------------------------------------------------
 
     Dim cn As New ADODB.Connection
@@ -38,10 +32,8 @@ On Error GoTo err1:
     , "{947bb102-5d43-11d1-bdbf-00c04fb92675}")
 
     'OUTPUT HEADERS TO LISTBOX
-    lstResults.AddItem rs.Fields(0).Name & "," & rs.Fields(1).Name & "," & rs.Fields(2).Name & "," _
-    & rs.Fields(3).Name & "," & "USER_NAME"
-    
-    
+    lstResults.AddItem rs.Fields(0).Name & "," & rs.Fields(1).Name & "," & rs.Fields(2).Name & "," & rs.Fields(3).Name & "," & "USER_NAME"
+        
     While Not rs.EOF
         'GET EMPLOYEE NAME BASED ON RETURNED COMPUTER NAME 
         compStr = DLookup("employee_name", "tblEmployeeNames", "[Computer Name] = '" & Clean(rs.Fields(0).Value) & "'") & vbNullString
