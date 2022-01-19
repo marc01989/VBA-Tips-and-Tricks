@@ -1,7 +1,4 @@
-Attribute VB_Name = "Form_USER CHECK"
-Option Compare Database
-
-Private Sub btnUserCheck_Click()
+Public Sub UserCheck()
 
 '-----------------------------------------------------------------------------------------------------------------------------------------------------------
 'query schema info to show which users are accessing records in Access db backend
