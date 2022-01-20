@@ -23,7 +23,7 @@ Public Sub RegularExpression(searchStr As String)
 
     'Instantiate regex object, set properties
     'Set Pattern property to searchStr param - this is the value you are/aren't looking for
-    'If you want to find string where this expression is not present, wrap searcStr in this:  ^((?! PHRASE HERE  ).)*$
+    'If you want to find string where this expression is not present, wrap searchStr in this:  ^((?! PHRASE HERE  ).)*$
     Set regex = New RegExp
     With regex
         .MultiLine = False
