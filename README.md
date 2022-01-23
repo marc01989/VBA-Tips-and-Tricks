@@ -9,7 +9,7 @@ Useful VBA functions and subs created for Microsoft Access
 <li>User Check</li>
 <li>Regular Expessions</li>
 <li>Form Validation</li>
-<li>Placeholder text - text box</li>
+<li>Placeholder Text for textbox controls</li>
 <li>Login Module</li>
 <li>Password Reset Module</li>
 <li>Import File from Directory - File Picker</li>
