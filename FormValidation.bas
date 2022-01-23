@@ -30,8 +30,9 @@ Public Function ValidateForm(submitType As Integer) As Boolean
     footerStr = "</ul>"
 
     Select Case submitType
-    
-        Case 1 'submit
+            
+    'this case example validates when user tries to submit username/password. Checks that both controls are not null
+        Case 1
             If IsNull(txtName) Or txtName.Value = "" Then
                 msgStr = msgStr & "<li><b>Name</b> cannot be blank.</li>"
                 ctlName = ctlName & "txtName,"
@@ -39,10 +40,12 @@ Public Function ValidateForm(submitType As Integer) As Boolean
             If IsNull(txtPassword) Or txtPassword.Value = "" Then
                 msgStr = msgStr & "<li><b>Password</b> cannot be blank.</li>"
                 ctlName = ctlName & "txtPassword,"
-            End If
+            End If 
+        'this you can add more case statements to validate different controls/events on form
             
     End Select
 
+    'If msgStr is empty, no errors. Else, display alert to user detailing which controls failed validate. SEt focus to first control 
     If msgStr = "" Then 'no errors
         txtErrorBox.Value = Null
         txtErrorBar.Value = Null
