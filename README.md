@@ -5,8 +5,9 @@ Useful VBA functions and subs created for Microsoft Access
 
 <ol>
 <li>Error Logger</li>
+<li>Clean Text</li>
 <li>User Check</li>
-<li>Regex</li>
+<li>Regular Expessions</li>
 <li>Form Validation</li>
 <li>Placeholder text - text box</li>
 <li>Login Module</li>
