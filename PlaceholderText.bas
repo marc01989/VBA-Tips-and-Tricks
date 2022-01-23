@@ -1,5 +1,5 @@
 '---------------------------------------------------------
-'Ways to display helpful placeholder text in textboxes
+'Ways to display placeholder text in textboxes
 'Placehoder text in this example reads "required" in lightgrey, indicating that use must enter username
 'the below events are all for a single textbox control named txtUserName
 'Note: set default forecolor in property sheet for control to #A6A6A6 (light grey). Modules below will change text color as needed
