@@ -1,18 +1,11 @@
-VERSION 1.0 CLASS
-BEGIN
-  MultiUse = -1  'True
-END
-Attribute VB_Name = "Form_Login"
-Attribute VB_GlobalNameSpace = False
-Attribute VB_Creatable = True
-Attribute VB_PredeclaredId = True
-Attribute VB_Exposed = False
-Option Compare Database
 
-Private Sub btnResetPassword_Click()
-    DoCmd.OpenForm "Password Reset", acNormal, , , acFormPropertySettings
-    DoCmd.Close acForm, "Login", acSaveNo
-End Sub
+'------------------------------------------------------------------
+'this module is a simple example of a login form for a MS Access database
+'assumes you have a table storing user names, pswds, user id's, active status, etc (tblUsers)
+'entry form is very simple, contains 2 textboxes (txtUserName and txtPassword)
+
+'------------------------------------------------------------------
+
 
 Private Sub btnSubmit_Click()
 
@@ -23,25 +16,25 @@ Private Sub btnSubmit_Click()
     End If
     
 On Error GoTo err1:
-
-    '----SUBMIT INFO HERE----
     Dim db As DAO.Database
     Dim rs As DAO.Recordset
     Dim userName As String, passwordInput As String, passwordSaved As String
     userName = txtUserName.Value
     passwordInput = txtPassword.Value
+    
     Set db = CurrentDb
-    Set rs = db.OpenRecordset("tblAuditors", dbOpenDynaset)
+      Set rs = db.OpenRecordset("tblUsers", dbOpenDynaset)
         With rs
             .FindFirst ("network_id = '" & userName & "'")
-                If .NoMatch Then '--user not on tblAuditors
+                If .NoMatch Then '--user not on tblUsers
                     If ValidateForm(2) = True Then
                         If MsgBox("Error submitting form. See 'Submission Errors' for more info.", vbExclamation + vbOKOnly, "Cannot Submit") = vbOK Then
                         End If
                     End If
-                Else '--user is on tblAuditors
+            
+                Else '--user is on tblUsers
 
-                    If rs![is_active] = 0 Then '--user not active
+                    If rs![is_active] = 0 Then '--user is on table but no longer active
                         If ValidateForm(3) = True Then
                             If MsgBox("Error submitting form. See 'Submission Errors' for more info.", vbExclamation + vbOKOnly, "Cannot Submit") = vbOK Then
                             End If
@@ -78,8 +71,12 @@ err1:
             Exit Sub
     End Select
 
-
 End Sub
+
+                
+
+                               
+                
 Public Function ValidateForm(submitType As Integer) As Boolean
 
     Dim msgStr As String, headerStr As String, footerStr As String, ctlName As String
@@ -123,43 +120,3 @@ Public Function ValidateForm(submitType As Integer) As Boolean
 End Function
 
 
-Private Sub txtUserName_Exit(Cancel As Integer)
-    If txtUserName.Value = "" Or IsNull(txtUserName) Then
-        txtUserName.ForeColor = RGB(166, 166, 166)
-    End If
-End Sub
-Private Sub txtUserName_KeyDown(KeyCode As Integer, Shift As Integer)
-    txtUserName.ForeColor = vbBlack
-End Sub
-Private Sub txtUserName_GotFocus()
-    If IsNull(txtUserName) Then
-        txtUserName.Format = ""
-    End If
-End Sub
-Private Sub txtUserName_LostFocus()
-    If IsNull(txtUserName) Then
-        txtUserName.Format = "@;required"
-    End If
-End Sub
-Private Sub txtPassword_Exit(Cancel As Integer)
-    If txtPassword.Value = "" Or IsNull(txtPassword) Then
-        txtPassword.ForeColor = RGB(166, 166, 166)
-        txtPassword.Format = "@;required"
-    Else
-        txtPassword.Format = ""
-        txtPassword.InputMask = "Password"
-    End If
-End Sub
-Private Sub txtPassword_KeyDown(KeyCode As Integer, Shift As Integer)
-    txtPassword.ForeColor = vbBlack
-End Sub
-Private Sub txtPassword_GotFocus()
-    If IsNull(txtPassword) Then
-        txtPassword.Format = ""
-    End If
-End Sub
-Private Sub txtPassword_LostFocus()
-    If IsNull(txtPassword) Then
-        txtPassword.Format = "@;required"
-    End If
-End Sub
