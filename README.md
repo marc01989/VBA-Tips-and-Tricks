@@ -13,6 +13,7 @@ Useful VBA functions and subs created for Microsoft Access
 <li>Login Module</li>
 <li>Password Reset Module</li>
 <li>Import File from Directory - File Picker</li>
+<li>Export File to Directory - File Picker</li>
 <li>Query SQL Server with Stored Credentials</li>
 <li>Clear Form</li>
 <li>Check Unsaved Changes</li>
