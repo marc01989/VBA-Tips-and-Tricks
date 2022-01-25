@@ -34,8 +34,7 @@ Public Sub LogError(strError, modName As String)
 End Sub
 
                 
-'THE BELOW SUB IS AN EXAMPLE OF HOW THE ErrorLogger() FUNCTION IS CALLED FROM DIFFERENT SUB
-                
+'THE BELOW SUB IS AN EXAMPLE OF HOW THE ErrorLogger() FUNCTION IS CALLED FROM DIFFERENT SUB               
 Private Sub btnSubmit_Click()        
     On Error GoTo err1:
 
